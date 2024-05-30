@@ -13,6 +13,7 @@ public class Prod
 
     public static void main(String[] args)
     {
+        log.info("I am a Kafka Producer");
         Scanner sc=new Scanner(System.in);
         String [] name=new String[10];
         System.out.println("Enter 10 names");
