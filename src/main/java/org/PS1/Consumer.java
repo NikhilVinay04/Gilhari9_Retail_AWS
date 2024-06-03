@@ -66,10 +66,6 @@ public class Consumer {
                     log.info("Partition: " + record.partition() + ", Offset: " + record.offset());
 
                     String rec = record.value();
-                    Gson gson = new Gson();
-                    String rec1=gson.toJson(rec);
-                    //JSONObject obj = new JSONObject(rec);
-
                     try {
                         HttpRequest request = HttpRequest.newBuilder()
                                 .POST(HttpRequest.BodyPublishers.ofString(rec))
@@ -79,7 +75,7 @@ public class Consumer {
 
                         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                         int statusCode = response.statusCode();
-
+                        // HTTP status codes >=200 and <300 indicate success when creating the request.
                         if (statusCode >= 200 && statusCode < 300) {
                             log.info("Response from API: " + response.body());
                         } else {

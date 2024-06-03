@@ -21,6 +21,7 @@ public class Prod
         log.info("I am a Kafka Producer");
         Scanner sc=new Scanner(System.in);
         String [] name=new String[10];
+        //Taking names of employees as user input
         System.out.println("Enter 10 names");
         for(int i=0;i<10;i++)
         {
@@ -40,17 +41,19 @@ public class Prod
 
         // send data - asynchronous
         String topic = "tpcs3";
+        // Gson is used here to convert a Java object of type Entity into a JSON object
         Gson gson = new Gson();
         for(int i=0;i<10;i++)
         {
             Random rand = new Random();
             double compensation = rand.nextInt(10) * 100000;
             long dob=rand.nextLong(100000, 200000);
+            //Creating the JSON object
             User user = new User(i, name[i],false,compensation,dob);
             Entity entity=new Entity(user);
             String value = gson.toJson(entity);
 
-            //JSONObject obj = new JSONObject(value);
+
             String key = "id_" + Integer.toString(i);
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
             producer.send(producerRecord, new Callback() {
