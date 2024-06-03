@@ -5,7 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Properties;
 import java.util.Scanner;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import org.apache.kafka.common.serialization.StringSerializer;
 public class Prod
 {
@@ -34,14 +39,18 @@ public class Prod
 
 
         // send data - asynchronous
-        String topic = "Names";
+        String topic = "tpcs3";
         Gson gson = new Gson();
         for(int i=0;i<10;i++)
         {
+            Random rand = new Random();
+            double compensation = rand.nextInt(10) * 100000;
+            long dob=rand.nextLong(100000, 200000);
+            User user = new User(i, name[i],false,compensation,dob);
+            Entity entity=new Entity(user);
+            String value = gson.toJson(entity);
 
-            User user = new User(i, name[i]);
-
-            String value = gson.toJson(user);
+            //JSONObject obj = new JSONObject(value);
             String key = "id_" + Integer.toString(i);
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
             producer.send(producerRecord, new Callback() {
