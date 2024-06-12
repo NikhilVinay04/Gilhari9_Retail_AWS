@@ -12,21 +12,22 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.apache.kafka.common.serialization.StringSerializer;
-public class Prod
+public class Prod_Inventory
 {
-    private static final Logger log = LoggerFactory.getLogger(Prod.class);
+    private static final Logger log = LoggerFactory.getLogger(Prod_Inventory.class);
 
     public static void main(String[] args)
     {
         log.info("I am a Kafka Producer");
         Scanner sc=new Scanner(System.in);
-        String [] name=new String[10];
+        int n=2;
+        String [] item=new String[n];
         //Taking names of employees as user input
         System.out.println("Enter 10 names");
-        for(int i=0;i<10;i++)
+        for(int i=0;i<n;i++)
         {
             String a=sc.next();
-            name[i]=a;
+            item[i]=a;
         }
 
         String bootstrapServers = "127.0.0.1:9092";
@@ -40,17 +41,17 @@ public class Prod
 
 
         // send data - asynchronous
-        String topic = "Employees";
+        String topic = "Inventory";
         // Gson is used here to convert a Java object of type Entity into a JSON object
         Gson gson = new Gson();
-        for(int i=0;i<10;i++)
+        for(int i=0;i<n;i++)
         {
             Random rand = new Random();
-            double compensation = rand.nextInt(10) * 100000;
+            double quantity = rand.nextInt(1,10);
             long dob=rand.nextLong(100000, 200000);
             //Creating the JSON object
-            User user = new User(i, name[i],false,compensation,dob);
-            Entity entity=new Entity(user);
+            Inventory inv = new Inventory(i, item[i],quantity,dob);
+            Entity_Inv entity=new Entity_Inv(inv);
             String value = gson.toJson(entity);
 
 
@@ -79,7 +80,4 @@ public class Prod
         producer.close();
 
     }
-
 }
-
-
