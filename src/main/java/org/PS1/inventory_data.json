@@ -1,0 +1,302 @@
+[
+    {
+        "itemID": 1,
+        "itemName": "Item1",
+        "quantity": 29.00,
+        "date": 1697363011858
+    },
+    {
+        "itemID": 2,
+        "itemName": "Item2",
+        "quantity": 34.00,
+        "date": 1708140611858
+    },
+    {
+        "itemID": 3,
+        "itemName": "Item3",
+        "quantity": 56.00,
+        "date": 1694406611858
+    },
+    {
+        "itemID": 4,
+        "itemName": "Item4",
+        "quantity": 62.00,
+        "date": 1706754211858
+    },
+    {
+        "itemID": 5,
+        "itemName": "Item5",
+        "quantity": 92.00,
+        "date": 1706607811858
+    },
+    {
+        "itemID": 6,
+        "itemName": "Item6",
+        "quantity": 34.00,
+        "date": 1709092611858
+    },
+    {
+        "itemID": 7,
+        "itemName": "Item7",
+        "quantity": 76.00,
+        "date": 1690105811858
+    },
+    {
+        "itemID": 8,
+        "itemName": "Item8",
+        "quantity": 41.00,
+        "date": 1702084611858
+    },
+    {
+        "itemID": 9,
+        "itemName": "Item9",
+        "quantity": 92.00,
+        "date": 1712369411858
+    },
+    {
+        "itemID": 10,
+        "itemName": "Item10",
+        "quantity": 59.00,
+        "date": 1710739011858
+    },
+    {
+        "itemID": 11,
+        "itemName": "Item11",
+        "quantity": 30.00,
+        "date": 1710196611858
+    },
+    {
+        "itemID": 12,
+        "itemName": "Item12",
+        "quantity": 68.00,
+        "date": 1711167011858
+    },
+    {
+        "itemID": 13,
+        "itemName": "Item13",
+        "quantity": 48.00,
+        "date": 1713676611858
+    },
+    {
+        "itemID": 14,
+        "itemName": "Item14",
+        "quantity": 65.00,
+        "date": 1703654211858
+    },
+    {
+        "itemID": 15,
+        "itemName": "Item15",
+        "quantity": 32.00,
+        "date": 1697017411858
+    },
+    {
+        "itemID": 16,
+        "itemName": "Item16",
+        "quantity": 97.00,
+        "date": 1699168211858
+    },
+    {
+        "itemID": 17,
+        "itemName": "Item17",
+        "quantity": 96.00,
+        "date": 1710556211858
+    },
+    {
+        "itemID": 18,
+        "itemName": "Item18",
+        "quantity": 23.00,
+        "date": 1700543811858
+    },
+    {
+        "itemID": 19,
+        "itemName": "Item19",
+        "quantity": 51.00,
+        "date": 1710196611858
+    },
+    {
+        "itemID": 20,
+        "itemName": "Item20",
+        "quantity": 35.00,
+        "date": 1704689811858
+    },
+    {
+        "itemID": 21,
+        "itemName": "Item21",
+        "quantity": 32.00,
+        "date": 1692776211858
+    },
+    {
+        "itemID": 22,
+        "itemName": "Item22",
+        "quantity": 6.00,
+        "date": 1703564211858
+    },
+    {
+        "itemID": 23,
+        "itemName": "Item23",
+        "quantity": 98.00,
+        "date": 1710033811858
+    },
+    {
+        "itemID": 24,
+        "itemName": "Item24",
+        "quantity": 65.00,
+        "date": 1710807011858
+    },
+    {
+        "itemID": 25,
+        "itemName": "Item25",
+        "quantity": 58.00,
+        "date": 1699331011858
+    },
+    {
+        "itemID": 26,
+        "itemName": "Item26",
+        "quantity": 7.00,
+        "date": 1690787011858
+    },
+    {
+        "itemID": 27,
+        "itemName": "Item27",
+        "quantity": 27.00,
+        "date": 1697276611858
+    },
+    {
+        "itemID": 28,
+        "itemName": "Item28",
+        "quantity": 6.00,
+        "date": 1698812611858
+    },
+    {
+        "itemID": 29,
+        "itemName": "Item29",
+        "quantity": 49.00,
+        "date": 1709272211858
+    },
+    {
+        "itemID": 30,
+        "itemName": "Item30",
+        "quantity": 8.00,
+        "date": 1709784211858
+    },
+    {
+        "itemID": 31,
+        "itemName": "Item31",
+        "quantity": 34.00,
+        "date": 1706412211858
+    },
+    {
+        "itemID": 32,
+        "itemName": "Item32",
+        "quantity": 87.00,
+        "date": 1708403411858
+    },
+    {
+        "itemID": 33,
+        "itemName": "Item33",
+        "quantity": 77.00,
+        "date": 1699861011858
+    },
+    {
+        "itemID": 34,
+        "itemName": "Item34",
+        "quantity": 60.00,
+        "date": 1701831811858
+    },
+    {
+        "itemID": 35,
+        "itemName": "Item35",
+        "quantity": 69.00,
+        "date": 1688966211858
+    },
+    {
+        "itemID": 36,
+        "itemName": "Item36",
+        "quantity": 13.00,
+        "date": 1707283011858
+    },
+    {
+        "itemID": 37,
+        "itemName": "Item37",
+        "quantity": 29.00,
+        "date": 1703827011858
+    },
+    {
+        "itemID": 38,
+        "itemName": "Item38",
+        "quantity": 90.00,
+        "date": 1699939011858
+    },
+    {
+        "itemID": 39,
+        "itemName": "Item39",
+        "quantity": 5.00,
+        "date": 1695532611858
+    },
+    {
+        "itemID": 40,
+        "itemName": "Item40",
+        "quantity": 51.00,
+        "date": 1710307011858
+    },
+    {
+        "itemID": 41,
+        "itemName": "Item41",
+        "quantity": 92.00,
+        "date": 1698394611858
+    },
+    {
+        "itemID": 42,
+        "itemName": "Item42",
+        "quantity": 78.00,
+        "date": 1698316611858
+    },
+    {
+        "itemID": 43,
+        "itemName": "Item43",
+        "quantity": 31.00,
+        "date": 1714874211858
+    },
+    {
+        "itemID": 44,
+        "itemName": "Item44",
+        "quantity": 80.00,
+        "date": 1705209411858
+    },
+    {
+        "itemID": 45,
+        "itemName": "Item45",
+        "quantity": 28.00,
+        "date": 1711759011858
+    },
+    {
+        "itemID": 46,
+        "itemName": "Item46",
+        "quantity": 86.00,
+        "date": 1700091811858
+    },
+    {
+        "itemID": 47,
+        "itemName": "Item47",
+        "quantity": 22.00,
+        "date": 1693639011858
+    },
+    {
+        "itemID": 48,
+        "itemName": "Item48",
+        "quantity": 36.00,
+        "date": 1702281011858
+    },
+    {
+        "itemID": 49,
+        "itemName": "Item49",
+        "quantity": 18.00,
+        "date": 1694425811858
+    },
+    {
+        "itemID": 50,
+        "itemName": "Item50",
+        "quantity": 36.00,
+        "date": 1696147411858
+    }
+]

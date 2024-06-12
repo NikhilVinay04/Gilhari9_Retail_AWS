@@ -2,21 +2,24 @@ package org.PS1;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.apache.kafka.clients.producer.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.apache.kafka.common.serialization.StringSerializer;
 public class Prod_Sales {
@@ -49,33 +52,18 @@ public class Prod_Sales {
         double currentQuantity = 0.0, quantity = 0.0;
         // send data - asynchronous
         String topic = "Sales";
-
-        for (int i = 0; i < n; i++) {
-
-            try {
-
-                URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + i);
-                HttpRequest request = HttpRequest.newBuilder()
-                        .GET()
-                        .uri(uri)
-                        .build();
-
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                //System.out.println(response.body());
-                Inventory inv = gson.fromJson(response.body(), Inventory.class);
-//                Inventory inv=ent.getEntity();
-                currentQuantity = inv.getQuantity();
-                Random rand = new Random();
-                quantity = rand.nextInt(1, (int) currentQuantity + 1);
-                long dob = rand.nextLong(100000, 200000);
-
-
-                //Creating the JSON object
-                Sales user = new Sales(i, i, items[i], quantity, dob);
-                Entity_Sales entity = new Entity_Sales(user);
-                String value = gson.toJson(entity);
-                String key = "id_" + i;
-                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
+        try
+        {
+            FileReader fr=new FileReader("src/main/java/org/PS1/sales_data.json");
+            Gson gson = new Gson();
+            Type salesListType = new TypeToken<List<Sales>>() {}.getType();
+            List<Sales> sl = gson.fromJson(fr, salesListType);
+            for(Sales s:sl)
+            {
+                String key = "id_" + s.getItemID();
+                Entity_Sales entity=new Entity_Sales(s);
+                String value=gson.toJson(entity);
+                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
                 producer.send(producerRecord, new Callback() {
                     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                         // executes every time a record is successfully sent or an exception is thrown
@@ -92,54 +80,147 @@ public class Prod_Sales {
                         }
                     }
                 });
-            } catch (Exception e) {
-                log.error("Exception occurred while getting attribute value: {}", e.getMessage());
+                try {
+                    URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + s.getId());
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .GET()
+                            .uri(uri)
+                            .build();
 
-            }
-            try {
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    //System.out.println(response.body());
+                    Inventory inv = gson.fromJson(response.body(), Inventory.class);
+                    currentQuantity=inv.getQuantity();
+                    quantity=s.getQuantity();
+                    double currInv = currentQuantity - quantity;
+                    JsonObject js = new JsonObject();
+                    JsonArray jsa = new JsonArray();
+                    jsa.add("quantity");
+                    jsa.add(currInv);
+                    js.add("newValues", jsa);
 
-                //Inventory inv = gson.fromJson(resp.body(), Inventory.class);
+                    URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + s.getId());
+                    HttpRequest req1 = HttpRequest.newBuilder()
+                            .uri(uri2)
+                            .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
+                            .header("Content-Type", "application/json")
+                            .build();
 
-//                            if (inv == null) {
-//                                log.error("Failed to deserialize response to Inventory object. Response body: " + resp.body());
-//                                continue;
-//                            }
+                    HttpResponse<String> resp1 = client.send(req1, HttpResponse.BodyHandlers.ofString());
+                    int patchStatusCode = resp1.statusCode();
+                    System.out.println(patchStatusCode);
 
-//                            double currentQuantity = inv.getQuantity();
-                double currInv = currentQuantity - quantity;
-//                            System.out.println(currInv);
+                    if (patchStatusCode >= 200 && patchStatusCode < 300) {
+                        log.info("Response from API: " + resp1.body());
+                        continue;
+                    } else {
+                        log.error("HTTP error code: " + patchStatusCode);
+                    }
 
-                JsonObject js = new JsonObject();
-                JsonArray jsa = new JsonArray();
-                jsa.add("quantity");
-                jsa.add(currInv);
-                js.add("newValues", jsa);
 
-                URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + i);
-                HttpRequest req1 = HttpRequest.newBuilder()
-                        .uri(uri2)
-                        .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
-                        .header("Content-Type", "application/json")
-                        .build();
-
-                HttpResponse<String> resp1 = client.send(req1, HttpResponse.BodyHandlers.ofString());
-                int patchStatusCode = resp1.statusCode();
-                System.out.println(patchStatusCode);
-
-                if (patchStatusCode >= 200 && patchStatusCode < 300) {
-                    log.info("Response from API: " + resp1.body());
-                    continue;
-                } else {
-                    log.error("HTTP error code: " + patchStatusCode);
+                } catch (Exception e) {
+                    log.error("Exception occurred while sending HTTP request: {}", e.getMessage());
                 }
 
 
-            } catch (Exception e) {
-                log.error("Exception occurred while sending HTTP request: {}", e.getMessage());
             }
 
 
         }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+//        for (int i = 0; i < n; i++) {
+//
+//            try {
+//
+//                URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + i);
+//                HttpRequest request = HttpRequest.newBuilder()
+//                        .GET()
+//                        .uri(uri)
+//                        .build();
+//
+//                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//                //System.out.println(response.body());
+//                Inventory inv = gson.fromJson(response.body(), Inventory.class);
+////                Inventory inv=ent.getEntity();
+//                currentQuantity = inv.getQuantity();
+//                Random rand = new Random();
+//                quantity = rand.nextInt(1, (int) currentQuantity + 1);
+//                long dob = rand.nextLong(100000, 200000);
+//
+//
+//                //Creating the JSON object
+//                Sales user = new Sales(i, i, items[i], quantity, dob);
+//                Entity_Sales entity = new Entity_Sales(user);
+//                String value = gson.toJson(entity);
+//                String key = "id_" + i;
+//                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
+//                producer.send(producerRecord, new Callback() {
+//                    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+//                        // executes every time a record is successfully sent or an exception is thrown
+//                        if (e == null) {
+//                            // the record was successfully sent
+//                            log.info("Received new metadata. \n" +
+//                                    "Topic:" + recordMetadata.topic() + "\n" +
+//                                    "Key:" + producerRecord.key() + "\n" +
+//                                    "Partition: " + recordMetadata.partition() + "\n" +
+//                                    "Offset: " + recordMetadata.offset() + "\n" +
+//                                    "Timestamp: " + recordMetadata.timestamp());
+//                        } else {
+//                            log.error("Error while producing", e);
+//                        }
+//                    }
+//                });
+//            } catch (Exception e) {
+//                log.error("Exception occurred while getting attribute value: {}", e.getMessage());
+//
+//            }
+//            try {
+//
+//                //Inventory inv = gson.fromJson(resp.body(), Inventory.class);
+//
+////                            if (inv == null) {
+////                                log.error("Failed to deserialize response to Inventory object. Response body: " + resp.body());
+////                                continue;
+////                            }
+//
+////                            double currentQuantity = inv.getQuantity();
+//                double currInv = currentQuantity - quantity;
+////                            System.out.println(currInv);
+//
+//                JsonObject js = new JsonObject();
+//                JsonArray jsa = new JsonArray();
+//                jsa.add("quantity");
+//                jsa.add(currInv);
+//                js.add("newValues", jsa);
+//
+//                URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + i);
+//                HttpRequest req1 = HttpRequest.newBuilder()
+//                        .uri(uri2)
+//                        .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
+//                        .header("Content-Type", "application/json")
+//                        .build();
+//
+//                HttpResponse<String> resp1 = client.send(req1, HttpResponse.BodyHandlers.ofString());
+//                int patchStatusCode = resp1.statusCode();
+//                System.out.println(patchStatusCode);
+//
+//                if (patchStatusCode >= 200 && patchStatusCode < 300) {
+//                    log.info("Response from API: " + resp1.body());
+//                    continue;
+//                } else {
+//                    log.error("HTTP error code: " + patchStatusCode);
+//                }
+//
+//
+//            } catch (Exception e) {
+//                log.error("Exception occurred while sending HTTP request: {}", e.getMessage());
+//            }
+//
+//
+//        }
         // flush data - synchronous
         producer.flush();
         // flush and close producer

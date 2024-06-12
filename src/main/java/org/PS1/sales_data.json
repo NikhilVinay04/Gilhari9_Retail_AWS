@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "itemID": 1,
+        "itemName": "Item1",
+        "quantity": 10.00,
+        "date": 1704042211858
+    },
+    {
+        "id": 2,
+        "itemID": 2,
+        "itemName": "Item2",
+        "quantity": 25.00,
+        "date": 1692699811858
+    },
+    {
+        "id": 3,
+        "itemID": 3,
+        "itemName": "Item3",
+        "quantity": 15.00,
+        "date": 1704188611858
+    },
+    {
+        "id": 4,
+        "itemID": 4,
+        "itemName": "Item4",
+        "quantity": 30.00,
+        "date": 1697983411858
+    },
+    {
+        "id": 5,
+        "itemID": 5,
+        "itemName": "Item5",
+        "quantity": 80.00,
+        "date": 1714867811858
+    },
+    {
+        "id": 6,
+        "itemID": 6,
+        "itemName": "Item6",
+        "quantity": 15.00,
+        "date": 1694425811858
+    },
+    {
+        "id": 7,
+        "itemID": 7,
+        "itemName": "Item7",
+        "quantity": 70.00,
+        "date": 1703843011858
+    },
+    {
+        "id": 8,
+        "itemID": 8,
+        "itemName": "Item8",
+        "quantity": 35.00,
+        "date": 1696835011858
+    },
+    {
+        "id": 9,
+        "itemID": 9,
+        "itemName": "Item9",
+        "quantity": 75.00,
+        "date": 1706347011858
+    },
+    {
+        "id": 10,
+        "itemID": 10,
+        "itemName": "Item10",
+        "quantity": 20.00,
+        "date": 170231901185
+    }
+]
