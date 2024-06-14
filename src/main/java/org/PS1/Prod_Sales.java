@@ -60,7 +60,7 @@ public class Prod_Sales {
             List<Sales> sl = gson.fromJson(fr, salesListType);
             for(Sales s:sl)
             {
-                String key = "id_" + s.getItemID();
+                String key = "id_" + s.getId();
                 Entity_Sales entity=new Entity_Sales(s);
                 String value=gson.toJson(entity);
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
@@ -81,13 +81,15 @@ public class Prod_Sales {
                     }
                 });
                 try {
-                    URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + s.getId());
+                    URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + s.getItemID());
                     HttpRequest request = HttpRequest.newBuilder()
                             .GET()
                             .uri(uri)
                             .build();
 
                     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    int getStatusCode = response.statusCode();
+                    System.out.println(getStatusCode);
                     //System.out.println(response.body());
                     Inventory inv = gson.fromJson(response.body(), Inventory.class);
                     currentQuantity=inv.getQuantity();
@@ -99,7 +101,7 @@ public class Prod_Sales {
                     jsa.add(currInv);
                     js.add("newValues", jsa);
 
-                    URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + s.getId());
+                    URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + s.getItemID());
                     HttpRequest req1 = HttpRequest.newBuilder()
                             .uri(uri2)
                             .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
@@ -131,96 +133,6 @@ public class Prod_Sales {
         {
             e.printStackTrace();
         }
-//        for (int i = 0; i < n; i++) {
-//
-//            try {
-//
-//                URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + i);
-//                HttpRequest request = HttpRequest.newBuilder()
-//                        .GET()
-//                        .uri(uri)
-//                        .build();
-//
-//                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//                //System.out.println(response.body());
-//                Inventory inv = gson.fromJson(response.body(), Inventory.class);
-////                Inventory inv=ent.getEntity();
-//                currentQuantity = inv.getQuantity();
-//                Random rand = new Random();
-//                quantity = rand.nextInt(1, (int) currentQuantity + 1);
-//                long dob = rand.nextLong(100000, 200000);
-//
-//
-//                //Creating the JSON object
-//                Sales user = new Sales(i, i, items[i], quantity, dob);
-//                Entity_Sales entity = new Entity_Sales(user);
-//                String value = gson.toJson(entity);
-//                String key = "id_" + i;
-//                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
-//                producer.send(producerRecord, new Callback() {
-//                    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-//                        // executes every time a record is successfully sent or an exception is thrown
-//                        if (e == null) {
-//                            // the record was successfully sent
-//                            log.info("Received new metadata. \n" +
-//                                    "Topic:" + recordMetadata.topic() + "\n" +
-//                                    "Key:" + producerRecord.key() + "\n" +
-//                                    "Partition: " + recordMetadata.partition() + "\n" +
-//                                    "Offset: " + recordMetadata.offset() + "\n" +
-//                                    "Timestamp: " + recordMetadata.timestamp());
-//                        } else {
-//                            log.error("Error while producing", e);
-//                        }
-//                    }
-//                });
-//            } catch (Exception e) {
-//                log.error("Exception occurred while getting attribute value: {}", e.getMessage());
-//
-//            }
-//            try {
-//
-//                //Inventory inv = gson.fromJson(resp.body(), Inventory.class);
-//
-////                            if (inv == null) {
-////                                log.error("Failed to deserialize response to Inventory object. Response body: " + resp.body());
-////                                continue;
-////                            }
-//
-////                            double currentQuantity = inv.getQuantity();
-//                double currInv = currentQuantity - quantity;
-////                            System.out.println(currInv);
-//
-//                JsonObject js = new JsonObject();
-//                JsonArray jsa = new JsonArray();
-//                jsa.add("quantity");
-//                jsa.add(currInv);
-//                js.add("newValues", jsa);
-//
-//                URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + i);
-//                HttpRequest req1 = HttpRequest.newBuilder()
-//                        .uri(uri2)
-//                        .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
-//                        .header("Content-Type", "application/json")
-//                        .build();
-//
-//                HttpResponse<String> resp1 = client.send(req1, HttpResponse.BodyHandlers.ofString());
-//                int patchStatusCode = resp1.statusCode();
-//                System.out.println(patchStatusCode);
-//
-//                if (patchStatusCode >= 200 && patchStatusCode < 300) {
-//                    log.info("Response from API: " + resp1.body());
-//                    continue;
-//                } else {
-//                    log.error("HTTP error code: " + patchStatusCode);
-//                }
-//
-//
-//            } catch (Exception e) {
-//                log.error("Exception occurred while sending HTTP request: {}", e.getMessage());
-//            }
-//
-//
-//        }
         // flush data - synchronous
         producer.flush();
         // flush and close producer

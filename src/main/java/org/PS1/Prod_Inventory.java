@@ -28,17 +28,6 @@ public class Prod_Inventory
     public static void main(String[] args)
     {
         log.info("I am a Kafka Producer");
-        Scanner sc=new Scanner(System.in);
-        int n=2;
-        String [] item=new String[n];
-        //Taking names of employees as user input
-//        System.out.println("Enter 10 names");
-//        for(int i=0;i<n;i++)
-//        {
-//            String a=sc.next();
-//            item[i]=a;
-//        }
-
         String bootstrapServers = "127.0.0.1:9092";
 
         // create Producer properties
@@ -87,37 +76,7 @@ public class Prod_Inventory
         {
             e.printStackTrace();
         }
-//        Gson gson = new Gson();
-//        for(int i=0;i<n;i++)
-//        {
-//            Random rand = new Random();
-//            double quantity = rand.nextInt(1,10);
-//            long dob=rand.nextLong(100000, 200000);
-//            //Creating the JSON object
-//            Inventory inv = new Inventory(i, item[i],quantity,dob);
-//            Entity_Inv entity=new Entity_Inv(inv);
-//            String value = gson.toJson(entity);
-//
-//
-//            String key = "id_" + Integer.toString(i);
-//            ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
-//            producer.send(producerRecord, new Callback() {
-//                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-//                    // executes every time a record is successfully sent or an exception is thrown
-//                    if (e == null) {
-//                        // the record was successfully sent
-//                        log.info("Received new metadata. \n" +
-//                                "Topic:" + recordMetadata.topic() + "\n" +
-//                                "Key:" + producerRecord.key() + "\n" +
-//                                "Partition: " + recordMetadata.partition() + "\n" +
-//                                "Offset: " + recordMetadata.offset() + "\n" +
-//                                "Timestamp: " + recordMetadata.timestamp());
-//                    } else {
-//                        log.error("Error while producing", e);
-//                    }
-//                }
-//            });
-//        }
+
         // flush data - synchronous
         producer.flush();
         // flush and close producer

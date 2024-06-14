@@ -2,12 +2,12 @@ package org.PS1;
 
 public class Sales
 {
-    int id;
-    int itemID;
+    String id;
+    String itemID;
     String itemName;
     double quantity;
     long date;
-    public Sales(int id, int itemID, String itemName, double quantity, long date)
+    public Sales(String id, String itemID, String itemName, double quantity, long date)
     {
         this.id = id;
         this.itemID = itemID;
@@ -16,11 +16,11 @@ public class Sales
         this.date = date;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public int getItemID() {
+    public String getItemID() {
         return itemID;
     }
 
