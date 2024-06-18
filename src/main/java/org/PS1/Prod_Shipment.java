@@ -22,7 +22,8 @@ import org.json.JSONObject;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.apache.kafka.common.serialization.StringSerializer;
-public class Prod_Sales {
+public class Prod_Shipment
+{
     private static final Logger log = LoggerFactory.getLogger(Prod_Sales.class);
     //private static final String BASE_URL = "http://localhost:80/gilhari/v1";
     // Gson is used here to convert a Java object of type Entity into a JSON object
@@ -42,17 +43,17 @@ public class Prod_Sales {
 
         double currentQuantity = 0.0, quantity = 0.0;
         // send data - asynchronous
-        String topic = "Sales";
+        String topic = "Shipment";
         try
         {
-            FileReader fr=new FileReader("src/main/java/org/PS1/sales_data.json");
+            FileReader fr=new FileReader("src/main/java/org/PS1/shipment_data.json");
             Gson gson = new Gson();
-            Type salesListType = new TypeToken<List<Sales>>() {}.getType();
-            List<Sales> sl = gson.fromJson(fr, salesListType);
-            for(Sales s:sl)
+            Type shipmentListType = new TypeToken<List<Shipment>>() {}.getType();
+            List<Shipment> sl = gson.fromJson(fr, shipmentListType);
+            for(Shipment s:sl)
             {
                 String key = "id_" + s.getId();
-                Entity_Sales entity=new Entity_Sales(s);
+                Entity_Ship entity=new Entity_Ship(s);
                 String value=gson.toJson(entity);
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
                 producer.send(producerRecord, new Callback() {
@@ -80,12 +81,11 @@ public class Prod_Sales {
 
                     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                     int getStatusCode = response.statusCode();
-                    System.out.println(getStatusCode);
                     //System.out.println(response.body());
                     Inventory inv = gson.fromJson(response.body(), Inventory.class);
                     currentQuantity=inv.getQuantity();
                     quantity=s.getQuantity();
-                    double currInv = currentQuantity - quantity;
+                    double currInv = currentQuantity + quantity;
                     JsonObject js = new JsonObject();
                     JsonArray jsa = new JsonArray();
                     jsa.add("quantity");
@@ -131,3 +131,4 @@ public class Prod_Sales {
 
     }
 }
+
