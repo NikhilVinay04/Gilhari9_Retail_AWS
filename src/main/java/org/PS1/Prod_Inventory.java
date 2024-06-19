@@ -37,7 +37,9 @@ public class Prod_Inventory
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the first id not yet posted");
+        int startID=sc.nextInt();
         // send data - asynchronous
         String topic = "Inventory";
         // Gson is used here to convert a Java object of type Entity into a JSON object
@@ -49,26 +51,29 @@ public class Prod_Inventory
             List<Inventory> inv = gson.fromJson(fr, inventoryListType);
             for(Inventory i:inv)
             {
-                String key = "id_" + i.getItemID();
-                Entity_Inv entity=new Entity_Inv(i);
-                String value=gson.toJson(entity);
-                ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
-                producer.send(producerRecord, new Callback() {
-                    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-                        // executes every time a record is successfully sent or an exception is thrown
-                        if (e == null) {
-                            // the record was successfully sent
-                            log.info("Received new metadata. \n" +
-                                    "Topic:" + recordMetadata.topic() + "\n" +
-                                    "Key:" + producerRecord.key() + "\n" +
-                                    "Partition: " + recordMetadata.partition() + "\n" +
-                                    "Offset: " + recordMetadata.offset() + "\n" +
-                                    "Timestamp: " + recordMetadata.timestamp());
-                        } else {
-                            log.error("Error while producing", e);
+                if(i.getItemID()>=startID)
+                {
+                    String key = "id_" + i.getItemID();
+                    Entity_Inv entity = new Entity_Inv(i);
+                    String value = gson.toJson(entity);
+                    ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
+                    producer.send(producerRecord, new Callback() {
+                        public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                            // executes every time a record is successfully sent or an exception is thrown
+                            if (e == null) {
+                                // the record was successfully sent
+                                log.info("Received new metadata. \n" +
+                                        "Topic:" + recordMetadata.topic() + "\n" +
+                                        "Key:" + producerRecord.key() + "\n" +
+                                        "Partition: " + recordMetadata.partition() + "\n" +
+                                        "Offset: " + recordMetadata.offset() + "\n" +
+                                        "Timestamp: " + recordMetadata.timestamp());
+                            } else {
+                                log.error("Error while producing", e);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
         }
