@@ -1,5 +1,5 @@
 package org.PS1;
-
+//This class represents the schema of the Shipment table
 public class Shipment
 {
     String id;

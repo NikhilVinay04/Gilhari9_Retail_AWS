@@ -1,5 +1,4 @@
 package org.PS1;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -13,11 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-public class InvGen
+public class EmpGen
 {
     public static void main(String[] args) throws IOException {
-        String inventoryFile = "src/main/java/org/PS1/inventory_data.json";
+        String employeeFile = "src/main/java/org/PS1/employee_data.json";
         Scanner sc=new Scanner(System.in);
         // Starting id is entered to avoid trying to create new records with already existing id's as this helps avoid
         // errors when posting data with already posted id's
@@ -26,42 +24,45 @@ public class InvGen
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
 
-            // Generate inventory data and creating a List of Inventory objects
-            Type inventoryListType = new TypeToken<ArrayList<Inventory>>() {}.getType();
-            List<Inventory> invdata = new ArrayList<>();
+            // Generate employee data
+            Type employeeListType = new TypeToken<ArrayList<User>>() {}.getType();
+            // Creating a list of Employees to store Employee data which is later written to the file
+            List<User> empdata = new ArrayList<>();
             Random random = new Random();
             try {
-                if (Files.exists(Paths.get(inventoryFile))) {
-                    FileReader reader = new FileReader(inventoryFile);
-                    invdata = gson.fromJson(reader, inventoryListType);
+                if (Files.exists(Paths.get(employeeFile))) {
+                    FileReader reader = new FileReader(employeeFile);
+                    empdata = gson.fromJson(reader, employeeListType);
                     reader.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // Generating 20 data points of Inventory data
+            // Creating 20 new Employee entries
             for (int i = startId; i < startId+20; i++)
             {
-
-                double salesQuantity=random.nextInt(1,101);
+                // Instantiating a User object which represents an Employee
+                double salary=random.nextInt(1,1000001);
                 long now = System.currentTimeMillis();
                 long oneYearAgo = now - (365L * 24 * 60 * 60 * 1000);
-                long salesDate = ThreadLocalRandom.current().nextLong(oneYearAgo, now);
-
-                Inventory invEntry = new Inventory(
-                        i,
+                long dob = ThreadLocalRandom.current().nextLong(oneYearAgo, now);
+                int rando=random.nextInt();
+                boolean exempt=rando%2==0;
+                User empEntry = new User(
+                        Integer.toString(i),
                         "Item"+i,
-                        salesQuantity,
-                        salesDate
+                        exempt,
+                        salary,
+                        dob
                 );
-                invdata.add(invEntry);
+                empdata.add(empEntry);
             }
 
-            // Write inventory data to file
+            // Write employee data to file
 
-            try (FileWriter writer = new FileWriter(inventoryFile))
+            try (FileWriter writer = new FileWriter(employeeFile))
             {
-                gson.toJson(invdata, writer);
+                gson.toJson(empdata, writer);
             }
             catch (IOException e)
             {

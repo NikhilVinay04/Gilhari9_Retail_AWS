@@ -1,5 +1,5 @@
 package org.PS1;
-
+// Provides the schema for the Inventory table as specified in the ORM file
 public class Inventory
 {
     int itemID;

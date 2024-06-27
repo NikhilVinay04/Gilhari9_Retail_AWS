@@ -38,6 +38,7 @@ public class Prod_Inventory
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
         Scanner sc=new Scanner(System.in);
+        // This is done to prevent overlap of id's
         System.out.println("Enter the first id not yet posted");
         int startID=sc.nextInt();
         // send data - asynchronous
@@ -49,9 +50,10 @@ public class Prod_Inventory
             Gson gson = new Gson();
             Type inventoryListType = new TypeToken<List<Inventory>>() {}.getType();
             List<Inventory> inv = gson.fromJson(fr, inventoryListType);
+            // Iterating through each Inventory object read from the JSON file
             for(Inventory i:inv)
             {
-                if(i.getItemID()>=startID)
+                if(i.getItemID()>=startID) // Done to prevent resending already sent data to the Kafka cluster
                 {
                     String key = "id_" + i.getItemID();
                     Entity_Inv entity = new Entity_Inv(i);

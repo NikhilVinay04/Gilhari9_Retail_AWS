@@ -56,6 +56,7 @@ public class Consumer {
         }));
 
         try {
+            //Listening to messages from the 4 topics
             consumer.subscribe(Arrays.asList("Employees", "Sales", "Inventory","Shipment"));
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
@@ -67,7 +68,7 @@ public class Consumer {
 
                     try {
                         HttpResponse<String> response = null;
-
+                        // POSTing the data to the correct table based on the topic
                         switch (record.topic()) {
                             case "Employees":
                                 try {
@@ -101,6 +102,7 @@ public class Consumer {
 
                                     response = client.send(request, HttpResponse.BodyHandlers.ofString());
                                     int statusCode = response.statusCode();
+                                    // HTTP status codes >=200 and <300 indicate success when creating the request.
                                     if (statusCode >= 200 && statusCode < 300) {
                                         log.info("Response from API: " + response.body());
                                     } else {
@@ -147,6 +149,7 @@ public class Consumer {
 
                                     response = client.send(request, HttpResponse.BodyHandlers.ofString());
                                     int statusCode = response.statusCode();
+                                    // HTTP status codes >=200 and <300 indicate success when creating the request.
                                     if (statusCode >= 200 && statusCode < 300) {
                                         log.info("Response from API: " + response.body());
                                     } else {

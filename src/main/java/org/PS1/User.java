@@ -1,5 +1,5 @@
 package org.PS1;
-//This class represents the JSON object inside entity
+//This class represents the schema of the Employee table
 public class User {
     private String id;
     private String name;

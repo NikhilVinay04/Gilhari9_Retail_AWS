@@ -36,10 +36,12 @@ public class Prod
 
         try
         {
+            // Reading the contents of the employee_data.json file
             FileReader fr=new FileReader("src/main/java/org/PS1/employee_data.json");
             // Gson is used here to convert a Java object of type Entity into a JSON object
             Gson gson = new Gson();
             Type employeeListType = new TypeToken<List<User>>() {}.getType();
+            //Converting the contents of the file read into a List of User Objects which we send to the Kafka Cluster
             List<User> inv = gson.fromJson(fr, employeeListType);
             for(User i:inv)
             {
@@ -47,6 +49,7 @@ public class Prod
                 Entity entity=new Entity(i);
                 String value=gson.toJson(entity);
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
+                //Sending data to the cluster
                 producer.send(producerRecord, new Callback() {
                     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                         // executes every time a record is successfully sent or an exception is thrown
