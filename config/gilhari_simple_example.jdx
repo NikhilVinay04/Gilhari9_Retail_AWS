@@ -62,3 +62,19 @@ CLASS org.emp.JSON_InventoryItem TABLE Inventory
   // Now provide the rest of the mapping specification for this class
   PRIMARY_KEY itemID
 ;
+
+CLASS org.emp.JSON_Shipment TABLE Shipment
+
+  // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
+  VIRTUAL_ATTRIB id ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
+
+  // date is represented as long (number of milliseconds) for a JSON
+  // object since there is no standard JSON string format for date representation
+  VIRTUAL_ATTRIB date ATTRIB_TYPE long
+
+  // Now provide the rest of the mapping specification for this class
+  PRIMARY_KEY id 
+;
