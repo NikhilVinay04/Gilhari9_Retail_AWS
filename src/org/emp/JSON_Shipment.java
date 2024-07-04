@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.softwaretree.jdx.JDX_JSONObject;
 
 /**
- * A shell (container) class defining a domain model object class for Sales objects
+ * A shell (container) class defining a domain model object class for Shipment objects
  * based on the class JSONObject.  This class needs to define just two constructors.
  * Most of the processing is handled by the superclass JDX_JSONObject.
  * Description of the Sales type object : 
