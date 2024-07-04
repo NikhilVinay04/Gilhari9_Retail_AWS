@@ -51,7 +51,7 @@ CLASS org.emp.JSON_Sale TABLE Sales
 CLASS org.emp.JSON_InventoryItem TABLE Inventory
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
