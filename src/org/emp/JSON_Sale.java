@@ -14,7 +14,7 @@ import com.softwaretree.jdx.JDX_JSONObject;
  *    itemID- ID of the Inventory item.
  *    itemName- Name of the item.
  *    quantity- Number of items being sold for a particular itemID.
- *    dob- long value to describe date in terms of milliseconds since 1/1/1970.
+ *    date- long value to describe date in terms of milliseconds since 1/1/1970.
  */
 
 public class JSON_Sale extends JDX_JSONObject {
