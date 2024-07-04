@@ -13,7 +13,7 @@ import com.softwaretree.jdx.JDX_JSONObject;
  *    itemID-String primary key.
  *    itemName- Name of the item.
  *    quantity- Number of items in Inventory for a particular itemID.
- *    dob- long value to describe date in terms of milliseconds since 1/1/1970.
+ *    date- long value to describe date in terms of milliseconds since 1/1/1970.
  */
 
 public class JSON_InventoryItem extends JDX_JSONObject {
