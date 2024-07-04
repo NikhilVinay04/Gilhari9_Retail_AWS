@@ -12,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-public class EmpGen
+
+// Generates data of Employee type and puts it in the employee_data.json file.
+public class EmployeeGen
 {
     public static void main(String[] args) throws IOException {
         String employeeFile = "src/main/java/org/PS1/employee_data.json";
@@ -25,9 +27,9 @@ public class EmpGen
         try {
 
             // Generate employee data
-            Type employeeListType = new TypeToken<ArrayList<User>>() {}.getType();
+            Type employeeListType = new TypeToken<ArrayList<Employee>>() {}.getType();
             // Creating a list of Employees to store Employee data which is later written to the file
-            List<User> empdata = new ArrayList<>();
+            List<Employee> empdata = new ArrayList<>();
             Random random = new Random();
             try {
                 if (Files.exists(Paths.get(employeeFile))) {
@@ -48,7 +50,7 @@ public class EmpGen
                 long dob = ThreadLocalRandom.current().nextLong(oneYearAgo, now);
                 int rando=random.nextInt();
                 boolean exempt=rando%2==0;
-                User empEntry = new User(
+                Employee empEntry = new Employee(
                         Integer.toString(i),
                         "Item"+i,
                         exempt,

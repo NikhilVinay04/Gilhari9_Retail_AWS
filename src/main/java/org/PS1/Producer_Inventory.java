@@ -5,25 +5,22 @@ import org.apache.kafka.clients.producer.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.Properties;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 import org.apache.kafka.common.serialization.StringSerializer;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.lang.reflect.Type;
 import java.util.List;
-public class Prod_Inventory
+
+// This class serves as a Kafka producer for Inventory type data.
+// It reads data from the inventory_data.json file and sends it to the Kafka cluster.
+
+public class Producer_Inventory
 {
-    private static final Logger log = LoggerFactory.getLogger(Prod_Inventory.class);
+    private static final Logger log = LoggerFactory.getLogger(Producer_Inventory.class);
 
     public static void main(String[] args)
     {
@@ -56,7 +53,7 @@ public class Prod_Inventory
                 if(i.getItemID()>=startID) // Done to prevent resending already sent data to the Kafka cluster
                 {
                     String key = "id_" + i.getItemID();
-                    Entity_Inv entity = new Entity_Inv(i);
+                    Entity_Inventory entity = new Entity_Inventory(i);
                     String value = gson.toJson(entity);
                     ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
                     producer.send(producerRecord, new Callback() {
@@ -90,4 +87,5 @@ public class Prod_Inventory
         producer.close();
 
     }
+
 }

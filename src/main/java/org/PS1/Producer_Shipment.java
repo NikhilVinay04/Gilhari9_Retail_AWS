@@ -16,15 +16,17 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+
 import org.apache.kafka.common.serialization.StringSerializer;
-public class Prod_Shipment
+
+// This class serves as a Kafka producer for Shipment type data.
+// It reads data from the shipment_data.json file and sends it to the Kafka cluster.
+// It also updates the Inventory quantity of the item being shipped into storage.
+
+public class Producer_Shipment
 {
-    private static final Logger log = LoggerFactory.getLogger(Prod_Sales.class);
+    private static final Logger log = LoggerFactory.getLogger(Producer_Sales.class);
 
     // Gson is used here to convert a Java object of type Entity into a JSON object
     private static final Gson gson = new Gson();
@@ -56,7 +58,7 @@ public class Prod_Shipment
                 if (Integer.parseInt(s.getId()) >= startID)
                 {
                     String key = "id_" + s.getId();
-                    Entity_Ship entity = new Entity_Ship(s);
+                    Entity_Shipment entity = new Entity_Shipment(s);
                     String value = gson.toJson(entity);
                     ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
                     producer.send(producerRecord, new Callback() {

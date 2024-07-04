@@ -10,15 +10,14 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+
 import org.apache.kafka.common.serialization.StringSerializer;
-public class Prod
+// This class serves as a Kafka producer for Employee type data.
+// It reads data from the employee_data.json file and sends it to the Kafka cluster.
+public class Producer_Employee
 {
-    private static final Logger log = LoggerFactory.getLogger(Prod.class);
+    private static final Logger log = LoggerFactory.getLogger(Producer_Employee.class);
 
     public static void main(String[] args)
     {
@@ -40,13 +39,13 @@ public class Prod
             FileReader fr=new FileReader("src/main/java/org/PS1/employee_data.json");
             // Gson is used here to convert a Java object of type Entity into a JSON object
             Gson gson = new Gson();
-            Type employeeListType = new TypeToken<List<User>>() {}.getType();
+            Type employeeListType = new TypeToken<List<Employee>>() {}.getType();
             //Converting the contents of the file read into a List of User Objects which we send to the Kafka Cluster
-            List<User> inv = gson.fromJson(fr, employeeListType);
-            for(User i:inv)
+            List<Employee> employeelist = gson.fromJson(fr, employeeListType);
+            for(Employee e:employeelist)
             {
-                String key = "id_" + i.getId();
-                Entity entity=new Entity(i);
+                String key = "id_" + e.getId();
+                Entity_Employee entity=new Entity_Employee(e);
                 String value=gson.toJson(entity);
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic,key,value);
                 //Sending data to the cluster

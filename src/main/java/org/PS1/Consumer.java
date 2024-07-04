@@ -19,7 +19,8 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
-
+// Reads data stored in the Kafka cluster from the topics "Employee", "Inventory", "Sales" and "Shipment".
+// Data is then posted onto a local PostgreSQL database using the Gilhari microservice framework's REST API(namely a POST request).
 public class Consumer {
     private static final Logger log = LoggerFactory.getLogger(Consumer.class);
     private static final Gson gson = new Gson();

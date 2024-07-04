@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+// Generates data of Sales type and puts it in the sales_data.json file.
 public class SalesGen
 {
     public static void main(String[] args) throws IOException {

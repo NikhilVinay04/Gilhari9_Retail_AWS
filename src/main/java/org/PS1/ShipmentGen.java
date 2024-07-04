@@ -12,8 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-public class ShipGen
+// Generates data of Shipment type and puts it in the shipment_data.json file.
+public class ShipmentGen
 {
     public static void main(String[] args) throws IOException {
         String inventoryFile = "src/main/java/org/PS1/inventory_data.json";

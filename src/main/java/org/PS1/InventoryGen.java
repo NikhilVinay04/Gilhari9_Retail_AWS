@@ -13,8 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-public class InvGen
+// Generates data of Inventory type and puts it in the inventory_data.json file.
+public class InventoryGen
 {
     public static void main(String[] args) throws IOException {
         String inventoryFile = "src/main/java/org/PS1/inventory_data.json";

@@ -26,4 +26,5 @@ public class Inventory
     public long getDate() {
         return date;
     }
+
 }

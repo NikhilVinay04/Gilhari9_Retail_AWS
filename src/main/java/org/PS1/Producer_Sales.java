@@ -16,15 +16,16 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+
 import org.apache.kafka.common.serialization.StringSerializer;
-public class Prod_Sales {
-    private static final Logger log = LoggerFactory.getLogger(Prod_Sales.class);
-    //private static final String BASE_URL = "http://localhost:80/gilhari/v1";
+
+// This class serves as a Kafka producer for Sales type data.
+// It reads data from the sales_data.json file and sends it to the Kafka cluster.
+// It also updates the Inventory quantity of the item being sold using the PATCH REST request of Gilhari.
+public class Producer_Sales {
+    private static final Logger log = LoggerFactory.getLogger(Producer_Sales.class);
+
     // Gson is used here to convert a Java object of type Entity into a JSON object
     private static final Gson gson = new Gson();
 
@@ -85,7 +86,6 @@ public class Prod_Sales {
                         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                         int getStatusCode = response.statusCode();
                         System.out.println(getStatusCode);
-                        //System.out.println(response.body());
                         Inventory inv = gson.fromJson(response.body(), Inventory.class);
                         currentQuantity = inv.getQuantity();
                         quantity = s.getQuantity();

@@ -1,13 +1,13 @@
 package org.PS1;
 //This class represents the schema of the Employee table
-public class User {
+public class Employee {
     private String id;
     private String name;
     private boolean exempt;
     private double compensation;
     private long dob;
     //Constructor to initialize variable values
-    public User(String id, String name,boolean exempt,double compensation,long dob) {
+    public Employee(String id, String name, boolean exempt, double compensation, long dob) {
         this.id = id;
         this.name = name;
         this.exempt = exempt;

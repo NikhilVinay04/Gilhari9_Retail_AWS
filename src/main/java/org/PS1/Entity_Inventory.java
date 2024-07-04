@@ -1,18 +1,18 @@
 package org.PS1;
 // This class exists to provide the correct format for the POST request to Gilhari. The format is: {"entity":{...}}
-public class Entity_Ship
+public class Entity_Inventory
 {
-    Shipment entity;
-    public Entity_Ship(Shipment entity)
+    Inventory entity;
+    public Entity_Inventory(Inventory entity)
     {
         this.entity = entity;
     }
 
-    public Shipment getEntity() {
+    public Inventory getEntity() {
         return entity;
     }
 
-    public void setEntity(Shipment entity) {
+    public void setEntity(Inventory entity) {
         this.entity = entity;
     }
 }
