@@ -10,7 +10,7 @@ import com.softwaretree.jdx.JDX_JSONObject;
  * based on the class JSONObject.  This class needs to define just two constructors.
  * Most of the processing is handled by the superclass JDX_JSONObject.
  * Description of the Inventory type object : 
- *    itemID-String primary key.
+ *    itemID- Primary key.
  *    itemName- Name of the item.
  *    quantity- Number of items in Inventory for a particular itemID.
  *    date- long value to describe date in terms of milliseconds since 1/1/1970.
