@@ -23,11 +23,14 @@ This project aims to show that the Gilhari microservice is an easy to use, low c
 
   Run the command ```docker build -t my_app_gilhari -f ./Dockerfile . --progress = plain --no-cache``` to build the docker image. To run the docker image we do: ```docker run -p 80:8081 my_app_gilhari```.
 
-## POSTGRESQL installation and running
+## POSTGRESQL INSTALLATION AND RUNNING
   
   Install ```Postgres.app``` from the website and then execute the command : ```psql postgres://username@localhost:5432```. Username refers to your local username and the default password is postgres which can be changed.5432 is the default port for POSTGRESQL. These details are required to be filled in the .jdx file and the .config file. A new database can be created with the command: ```CREATE DATABASE db1;``` on the command line where db1 is the name of the database. Do note that the semi colon is a part of Postgresql syntax. To connect to database db1 run ```\c db1``` on the command line or open the Postgres app and click on the database db1.
 
 Postgresql should be running in a separate terminal at the same time as the docker image of Gilhari, kafka and zookeeper.
+
+## HOSTING A POSTGRESQL DATABASE ON AWS
+   To do this, a Postgresql database db1 is created using Amazon RDS(Relational Database Service) with public access to its IP. To avoid any issues the security group must be configured with inbound and outbound rules such that network traffic from one's system is allowed to access the database and bypass the firewall else Gilhari would be unable to connect to the database. Following this, in the ORM file we provide the link in the format ``` my_aws_endpoint:5432/db1? ``` where ``` my_aws_endpoint ``` refers to the endpoint that is provided by AWS and can be copied from the webpage showing the details of the database being hosted. Username and password used must also be mentioned in the ORM file to allow Gilhari access to the database. One must also ensure to delete the database instance once usage of it is completed as merely stopping the instance does not prevent getting charged as it incurs storage costs.
 
 ## RUNNING PRODUCER AND CONSUMER
  The 4 producers(```Prod.java, Prod_Inventory.java, Prod_Sales.java, Prod_Shipment```) and consumer(```Consumer.java```) are a part of a Maven project on  IntelliJ IDE. Fill in the required dependencies in the ```pom.xml``` file as and when needed. 
