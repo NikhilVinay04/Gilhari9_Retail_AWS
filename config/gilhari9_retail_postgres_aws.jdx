@@ -11,7 +11,7 @@
 
 // JDBC_DRIVER com.mysql.jdbc.Driver
 
- JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5432/db1;USER=nikhilvinay;PASSWORD=postgres;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=3
+ JDX_DATABASE JDX:jdbc:postgresql://my_aws_endpoint:5432/db1?;USER=my_username;PASSWORD=my_password;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=3
  JDBC_DRIVER org.postgresql.Driver
 ;
 REM ************************************************************************
@@ -51,7 +51,7 @@ CLASS org.emp.JSON_Sale TABLE Sales
 CLASS org.emp.JSON_InventoryItem TABLE Inventory
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
