@@ -32,6 +32,22 @@ Postgresql should be running in a separate terminal at the same time as the dock
 ## HOSTING A POSTGRESQL DATABASE ON AWS
    To do this, a Postgresql database db1 is created using Amazon RDS(Relational Database Service) with public access to its IP. To avoid any issues the security group must be configured with inbound and outbound rules such that IPV4 and IPV6 traffic from one's system is allowed to access the database and bypass the firewall else Gilhari would be unable to connect to the database. Following this, in the ORM file we provide the link in the format ``` my_aws_endpoint:5432/db1? ``` where ``` my_aws_endpoint ``` refers to the endpoint that is provided by AWS and can be copied from the webpage showing the details of the database being hosted. Username and password used must also be mentioned in the ORM file to allow Gilhari access to the database. One must also ensure to delete the database instance once usage of it is completed as merely stopping the instance does not prevent getting charged as it incurs storage costs.
 
+## HOSTING GILHARI ON AWS
+The first step involves setting up a public repository on Amazon Elastic Container Registry(ECR) with some repo name. Following this the AWS Command Line Interface must be installed to run aws commands to push the docker image of Gilhari to ECR.
+
+An IAM user must be created with policies of AmazonEC2ContainerRegistryFullAccess and AmazonElasticContainerRegistryPublicFullAccess attached. An access key is created in the security credentials tab of the user and the access key and secret access key is used when we open the CLI and type aws configure which prompts an answer to the above categories.
+
+The commands to push a docker image to the registry are as mentioned in the view push commands option seen when the repository is clicked. Those commands are to be copied and pasted exactly as mentioned.
+
+The next step involves creating a public cluster in Amazon Elastic Cluster Service with Amazon EC2 instances for the infrastructure. A SSH key pair is also to be created using a .pem file format. The same security group that we used to connect to RDS is also used here. One must also ensure that for the Auto Assign Public IP section, the option of ‘turn on’ must be selected.
+
+For this cluster a task definition is created with EC2 instances for infrastructure requirements. In the section for container paste the docker image uri found in ECR and fill 8081 as the container port number. This task is then run using ‘run new task’ in the cluster tab.
+
+After this an EC2 instance is created. On clicking the instance id, one must click the connect button and go to the SSH client tab. On going to the directory housing the downloaded key1.pem file through the terminal, run the command given under example of the SSH client tab.
+
+Finally we pull the docker image using the command docker pull <image-uri> and run the container to run Gilhari.
+
+
 ## RUNNING PRODUCER AND CONSUMER
  The 4 producers(```Prod.java, Prod_Inventory.java, Prod_Sales.java, Prod_Shipment```) and consumer(```Consumer.java```) are a part of a Maven project on  IntelliJ IDE. Fill in the required dependencies in the ```pom.xml``` file as and when needed. 
 
@@ -45,5 +61,5 @@ Postgresql should be running in a separate terminal at the same time as the dock
 
 The single Consumer serves all 4 topics(Employees, Inventory, Shipment and Sales) and takes care of sending data obtained to the database through POST API calls.
 
-Data is filled in the JSON files by means of JSON generator programs ```EmployeeGen.java, SalesGen.java, ShipmentGen.java and InventoryGen.java``` which create data following the template specified by the Employee, Sales, Shipment and Inventory classes respectively. This is done with the help of Gson which is a Java library that helps converting Java Objects into a string in a JSON format.
+Data is filled in the JSON files by means of JSON generator programs ```EmployeeGen.java, SalesGen.java, ShipmentGen.java and InventoryGen.java``` which create data following the template specified by the Employee, Sales, Shipment and Inventory tables as shown in the .jdx file.
 
