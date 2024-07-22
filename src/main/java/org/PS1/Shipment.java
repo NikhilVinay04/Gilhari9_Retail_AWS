@@ -6,8 +6,8 @@ public class Shipment
     String itemID;
     String itemName;
     double quantity;
-    long date;
-    public Shipment(String id, String itemID, String itemName, double quantity, long date)
+    String date;
+    public Shipment(String id, String itemID, String itemName, double quantity, String date)
     {
         this.id = id;
         this.itemID = itemID;
@@ -28,7 +28,7 @@ public class Shipment
         return quantity;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 

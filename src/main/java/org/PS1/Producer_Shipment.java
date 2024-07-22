@@ -1,35 +1,28 @@
 package org.PS1;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.*;
-
 import java.util.Properties;
-
-import org.apache.kafka.common.serialization.StringSerializer;
+import java.util.Scanner;
 
 // This class serves as a Kafka producer for Shipment type data.
 // It reads data from the shipment_data.json file and sends it to the Kafka cluster.
 // It also updates the Inventory quantity of the item being shipped into storage.
 
-public class Producer_Shipment
-{
-    private static final Logger log = LoggerFactory.getLogger(Producer_Sales.class);
-
-    // Gson is used here to convert a Java object of type Entity into a JSON object
-    private static final Gson gson = new Gson();
+public class Producer_Shipment {
+    private static final Logger log = LoggerFactory.getLogger(Producer_Shipment.class);
 
     public static void main(String[] args) {
         log.info("I am a Kafka Producer");
@@ -42,24 +35,25 @@ public class Producer_Shipment
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
-        Scanner sc=new Scanner(System.in);
+
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the first id not yet posted");
-        int startID=sc.nextInt();
+        int startID = sc.nextInt();
         double currentQuantity = 0.0, quantity = 0.0;
+
         // send data - asynchronous
         String topic = "Shipment";
-        try
-        {
-            FileReader fr=new FileReader("src/main/java/org/PS1/shipment_data.json");
-            Gson gson = new Gson();
-            Type shipmentListType = new TypeToken<List<Shipment>>() {}.getType();
-            List<Shipment> sl = gson.fromJson(fr, shipmentListType);
-            for(Shipment s:sl) {
-                if (Integer.parseInt(s.getId()) >= startID)
-                {
-                    String key = "id_" + s.getId();
-                    Entity_Shipment entity = new Entity_Shipment(s);
-                    String value = gson.toJson(entity);
+        try {
+            String shipmentJson = new String(Files.readAllBytes(Paths.get("src/main/java/org/PS1/shipment_data.json")), StandardCharsets.UTF_8);
+            JSONArray shipmentArray = new JSONArray(shipmentJson);
+
+            for (int i = 0; i < shipmentArray.length(); i++) {
+                JSONObject s = shipmentArray.getJSONObject(i);
+                if (Integer.parseInt(s.getString("id")) >= startID) {
+                    String key = "id_" + s.getString("id");
+                    JSONObject entity = new JSONObject();
+                    entity.put("entity",s);
+                    String value = entity.toString();
                     ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
                     producer.send(producerRecord, new Callback() {
                         public void onCompletion(RecordMetadata recordMetadata, Exception e) {
@@ -78,7 +72,7 @@ public class Producer_Shipment
                         }
                     });
                     try {
-                        URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + s.getItemID());
+                        URI uri = URI.create("http://localhost:80/gilhari/v1/Inventory/getObjectById?filter=itemID=" + s.getString("itemID"));
                         HttpRequest request = HttpRequest.newBuilder()
                                 .GET()
                                 .uri(uri)
@@ -86,21 +80,21 @@ public class Producer_Shipment
 
                         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                         int getStatusCode = response.statusCode();
-                        //System.out.println(response.body());
-                        Inventory inv = gson.fromJson(response.body(), Inventory.class);
-                        currentQuantity = inv.getQuantity();
-                        quantity = s.getQuantity();
+                        System.out.println(getStatusCode);
+                        JSONObject inv = new JSONObject(response.body());
+                        currentQuantity = inv.getDouble("quantity");
+                        quantity = s.getDouble("quantity");
                         double currInv = currentQuantity + quantity;
-                        JsonObject js = new JsonObject();
-                        JsonArray jsa = new JsonArray();
-                        jsa.add("quantity");
-                        jsa.add(currInv);
-                        js.add("newValues", jsa);
+                        JSONObject js = new JSONObject();
+                        JSONArray jsa = new JSONArray();
+                        jsa.put("quantity");
+                        jsa.put(currInv);
+                        js.put("newValues", jsa);
 
-                        URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + s.getItemID());
+                        URI uri2 = URI.create("http://localhost:80/gilhari/v1/Inventory?filter=itemID=" + s.getString("itemID"));
                         HttpRequest req1 = HttpRequest.newBuilder()
                                 .uri(uri2)
-                                .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(js)))
+                                .method("PATCH", HttpRequest.BodyPublishers.ofString(js.toString()))
                                 .header("Content-Type", "application/json")
                                 .build();
 
@@ -115,26 +109,19 @@ public class Producer_Shipment
                             log.error("HTTP error code: " + patchStatusCode);
                         }
 
-
                     } catch (Exception e) {
                         log.error("Exception occurred while sending HTTP request: {}", e.getMessage());
                     }
-
-
                 }
             }
 
-
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
         // flush data - synchronous
         producer.flush();
         // flush and close producer
         producer.close();
-
     }
 }
-

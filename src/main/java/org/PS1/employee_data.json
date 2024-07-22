@@ -1,422 +1,142 @@
 [
-  {
-    "id": "1",
-    "name": "Item1",
-    "exempt": false,
-    "compensation": 396164.0,
-    "dob": 1699103711866
-  },
-  {
-    "id": "2",
-    "name": "Item2",
-    "exempt": true,
-    "compensation": 267171.0,
-    "dob": 1688173386487
-  },
-  {
-    "id": "3",
-    "name": "Item3",
-    "exempt": false,
-    "compensation": 714733.0,
-    "dob": 1693283571026
-  },
-  {
-    "id": "4",
-    "name": "Item4",
-    "exempt": true,
-    "compensation": 841061.0,
-    "dob": 1699994576120
-  },
-  {
-    "id": "5",
-    "name": "Item5",
-    "exempt": false,
-    "compensation": 221358.0,
-    "dob": 1710487483908
-  },
-  {
-    "id": "6",
-    "name": "Item6",
-    "exempt": false,
-    "compensation": 799320.0,
-    "dob": 1694397505710
-  },
-  {
-    "id": "7",
-    "name": "Item7",
-    "exempt": false,
-    "compensation": 649021.0,
-    "dob": 1709100380146
-  },
-  {
-    "id": "8",
-    "name": "Item8",
-    "exempt": false,
-    "compensation": 39461.0,
-    "dob": 1699763399709
-  },
-  {
-    "id": "9",
-    "name": "Item9",
-    "exempt": false,
-    "compensation": 731169.0,
-    "dob": 1700613179076
-  },
-  {
-    "id": "10",
-    "name": "Item10",
-    "exempt": false,
-    "compensation": 959773.0,
-    "dob": 1691649029744
-  },
-  {
-    "id": "11",
-    "name": "Item11",
-    "exempt": true,
-    "compensation": 87689.0,
-    "dob": 1705269719153
-  },
-  {
-    "id": "12",
-    "name": "Item12",
-    "exempt": false,
-    "compensation": 241125.0,
-    "dob": 1700738869317
-  },
-  {
-    "id": "13",
-    "name": "Item13",
-    "exempt": false,
-    "compensation": 967370.0,
-    "dob": 1711076855856
-  },
-  {
-    "id": "14",
-    "name": "Item14",
-    "exempt": true,
-    "compensation": 340287.0,
-    "dob": 1698833318326
-  },
-  {
-    "id": "15",
-    "name": "Item15",
-    "exempt": true,
-    "compensation": 644724.0,
-    "dob": 1706173196505
-  },
-  {
-    "id": "16",
-    "name": "Item16",
-    "exempt": false,
-    "compensation": 420721.0,
-    "dob": 1704733575379
-  },
-  {
-    "id": "17",
-    "name": "Item17",
-    "exempt": true,
-    "compensation": 990031.0,
-    "dob": 1696008455127
-  },
-  {
-    "id": "18",
-    "name": "Item18",
-    "exempt": false,
-    "compensation": 105235.0,
-    "dob": 1705922462663
-  },
-  {
-    "id": "19",
-    "name": "Item19",
-    "exempt": false,
-    "compensation": 655927.0,
-    "dob": 1699509542020
-  },
-  {
-    "id": "20",
-    "name": "Item20",
-    "exempt": true,
-    "compensation": 640634.0,
-    "dob": 1702753105651
-  },
-  {
-    "id": "21",
-    "name": "Item21",
-    "exempt": true,
-    "compensation": 463143.0,
-    "dob": 1691619432154
-  },
-  {
-    "id": "22",
-    "name": "Item22",
-    "exempt": false,
-    "compensation": 899685.0,
-    "dob": 1704687575209
-  },
-  {
-    "id": "23",
-    "name": "Item23",
-    "exempt": true,
-    "compensation": 916077.0,
-    "dob": 1688048095119
-  },
-  {
-    "id": "24",
-    "name": "Item24",
-    "exempt": false,
-    "compensation": 385111.0,
-    "dob": 1715262342686
-  },
-  {
-    "id": "25",
-    "name": "Item25",
-    "exempt": false,
-    "compensation": 12775.0,
-    "dob": 1718081365230
-  },
-  {
-    "id": "26",
-    "name": "Item26",
-    "exempt": false,
-    "compensation": 410959.0,
-    "dob": 1698409983893
-  },
-  {
-    "id": "27",
-    "name": "Item27",
-    "exempt": false,
-    "compensation": 542322.0,
-    "dob": 1706708605136
-  },
-  {
-    "id": "28",
-    "name": "Item28",
-    "exempt": false,
-    "compensation": 116344.0,
-    "dob": 1710761948705
-  },
-  {
-    "id": "29",
-    "name": "Item29",
-    "exempt": true,
-    "compensation": 556725.0,
-    "dob": 1708077186311
-  },
-  {
-    "id": "30",
-    "name": "Item30",
-    "exempt": false,
-    "compensation": 377565.0,
-    "dob": 1712597729234
-  },
-  {
-    "id": "31",
-    "name": "Item31",
-    "exempt": true,
-    "compensation": 10969.0,
-    "dob": 1702400918164
-  },
-  {
-    "id": "32",
-    "name": "Item32",
-    "exempt": false,
-    "compensation": 851056.0,
-    "dob": 1700889657825
-  },
-  {
-    "id": "33",
-    "name": "Item33",
-    "exempt": true,
-    "compensation": 474264.0,
-    "dob": 1705229279211
-  },
-  {
-    "id": "34",
-    "name": "Item34",
-    "exempt": true,
-    "compensation": 911911.0,
-    "dob": 1704852376392
-  },
-  {
-    "id": "35",
-    "name": "Item35",
-    "exempt": false,
-    "compensation": 864111.0,
-    "dob": 1706767888946
-  },
-  {
-    "id": "36",
-    "name": "Item36",
-    "exempt": true,
-    "compensation": 398593.0,
-    "dob": 1699299525105
-  },
-  {
-    "id": "37",
-    "name": "Item37",
-    "exempt": true,
-    "compensation": 557677.0,
-    "dob": 1705989647287
-  },
-  {
-    "id": "38",
-    "name": "Item38",
-    "exempt": true,
-    "compensation": 864231.0,
-    "dob": 1692489152703
-  },
-  {
-    "id": "39",
-    "name": "Item39",
-    "exempt": false,
-    "compensation": 957614.0,
-    "dob": 1703654568556
-  },
-  {
-    "id": "40",
-    "name": "Item40",
-    "exempt": true,
-    "compensation": 829677.0,
-    "dob": 1702482947061
-  },
-  {
-    "id": "41",
-    "name": "Item41",
-    "exempt": true,
-    "compensation": 469160.0,
-    "dob": 1702789698809
-  },
-  {
-    "id": "42",
-    "name": "Item42",
-    "exempt": true,
-    "compensation": 790235.0,
-    "dob": 1704426273511
-  },
-  {
-    "id": "43",
-    "name": "Item43",
-    "exempt": false,
-    "compensation": 1295.0,
-    "dob": 1688401970785
-  },
-  {
-    "id": "44",
-    "name": "Item44",
-    "exempt": true,
-    "compensation": 49656.0,
-    "dob": 1706790284760
-  },
-  {
-    "id": "45",
-    "name": "Item45",
-    "exempt": false,
-    "compensation": 232014.0,
-    "dob": 1718701683248
-  },
-  {
-    "id": "46",
-    "name": "Item46",
-    "exempt": false,
-    "compensation": 294005.0,
-    "dob": 1716231367243
-  },
-  {
-    "id": "47",
-    "name": "Item47",
-    "exempt": false,
-    "compensation": 218802.0,
-    "dob": 1694342179021
-  },
-  {
-    "id": "48",
-    "name": "Item48",
-    "exempt": true,
-    "compensation": 249084.0,
-    "dob": 1693359431667
-  },
-  {
-    "id": "49",
-    "name": "Item49",
-    "exempt": false,
-    "compensation": 586028.0,
-    "dob": 1697021269051
-  },
-  {
-    "id": "50",
-    "name": "Item50",
-    "exempt": false,
-    "compensation": 297734.0,
-    "dob": 1718982789573
-  },
-  {
-    "id": "51",
-    "name": "Item51",
-    "exempt": true,
-    "compensation": 413105.0,
-    "dob": 1703958165824
-  },
-  {
-    "id": "52",
-    "name": "Item52",
-    "exempt": false,
-    "compensation": 476431.0,
-    "dob": 1700229450543
-  },
-  {
-    "id": "53",
-    "name": "Item53",
-    "exempt": false,
-    "compensation": 168194.0,
-    "dob": 1707294984273
-  },
-  {
-    "id": "54",
-    "name": "Item54",
-    "exempt": false,
-    "compensation": 283944.0,
-    "dob": 1692116313683
-  },
-  {
-    "id": "55",
-    "name": "Item55",
-    "exempt": false,
-    "compensation": 127366.0,
-    "dob": 1718019299122
-  },
-  {
-    "id": "56",
-    "name": "Item56",
-    "exempt": false,
-    "compensation": 545963.0,
-    "dob": 1711262125025
-  },
-  {
-    "id": "57",
-    "name": "Item57",
-    "exempt": true,
-    "compensation": 664530.0,
-    "dob": 1700862075887
-  },
-  {
-    "id": "58",
-    "name": "Item58",
-    "exempt": false,
-    "compensation": 479944.0,
-    "dob": 1715822767345
-  },
-  {
-    "id": "59",
-    "name": "Item59",
-    "exempt": false,
-    "compensation": 122635.0,
-    "dob": 1690477509619
-  },
-  {
-    "id": "60",
-    "name": "Item60",
-    "exempt": false,
-    "compensation": 668990.0,
-    "dob": 1693872658400
-  }
+    {
+        "dob": "2024-06-21",
+        "name": "Item1",
+        "compensation": 203252,
+        "id": "1",
+        "exempt": false
+    },
+    {
+        "dob": "2024-07-09",
+        "name": "Item2",
+        "compensation": 868569,
+        "id": "2",
+        "exempt": false
+    },
+    {
+        "dob": "2023-10-23",
+        "name": "Item3",
+        "compensation": 386186,
+        "id": "3",
+        "exempt": true
+    },
+    {
+        "dob": "2023-08-07",
+        "name": "Item4",
+        "compensation": 208165,
+        "id": "4",
+        "exempt": false
+    },
+    {
+        "dob": "2024-06-23",
+        "name": "Item5",
+        "compensation": 327615,
+        "id": "5",
+        "exempt": true
+    },
+    {
+        "dob": "2024-07-16",
+        "name": "Item6",
+        "compensation": 508821,
+        "id": "6",
+        "exempt": true
+    },
+    {
+        "dob": "2024-04-11",
+        "name": "Item7",
+        "compensation": 722369,
+        "id": "7",
+        "exempt": true
+    },
+    {
+        "dob": "2024-04-16",
+        "name": "Item8",
+        "compensation": 782462,
+        "id": "8",
+        "exempt": true
+    },
+    {
+        "dob": "2024-02-24",
+        "name": "Item9",
+        "compensation": 884013,
+        "id": "9",
+        "exempt": false
+    },
+    {
+        "dob": "2024-01-21",
+        "name": "Item10",
+        "compensation": 637685,
+        "id": "10",
+        "exempt": true
+    },
+    {
+        "dob": "2024-05-02",
+        "name": "Item11",
+        "compensation": 665585,
+        "id": "11",
+        "exempt": false
+    },
+    {
+        "dob": "2023-12-07",
+        "name": "Item12",
+        "compensation": 774141,
+        "id": "12",
+        "exempt": true
+    },
+    {
+        "dob": "2023-10-31",
+        "name": "Item13",
+        "compensation": 280275,
+        "id": "13",
+        "exempt": false
+    },
+    {
+        "dob": "2023-12-25",
+        "name": "Item14",
+        "compensation": 171098,
+        "id": "14",
+        "exempt": false
+    },
+    {
+        "dob": "2023-12-16",
+        "name": "Item15",
+        "compensation": 474186,
+        "id": "15",
+        "exempt": true
+    },
+    {
+        "dob": "2024-01-30",
+        "name": "Item16",
+        "compensation": 182916,
+        "id": "16",
+        "exempt": false
+    },
+    {
+        "dob": "2024-07-07",
+        "name": "Item17",
+        "compensation": 821706,
+        "id": "17",
+        "exempt": false
+    },
+    {
+        "dob": "2023-08-09",
+        "name": "Item18",
+        "compensation": 484407,
+        "id": "18",
+        "exempt": false
+    },
+    {
+        "dob": "2024-07-20",
+        "name": "Item19",
+        "compensation": 49565,
+        "id": "19",
+        "exempt": false
+    },
+    {
+        "dob": "2023-09-11",
+        "name": "Item20",
+        "compensation": 367143,
+        "id": "20",
+        "exempt": false
+    }
 ]

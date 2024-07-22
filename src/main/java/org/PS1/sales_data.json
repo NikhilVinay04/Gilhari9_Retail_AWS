@@ -1,72 +1,72 @@
 [
-  {
-    "id": "1",
-    "itemID": "5",
-    "itemName": "Item5",
-    "quantity": 9.0,
-    "date": 1691039784530
-  },
-  {
-    "id": "2",
-    "itemID": "4",
-    "itemName": "Item4",
-    "quantity": 4.0,
-    "date": 1689707897278
-  },
-  {
-    "id": "3",
-    "itemID": "8",
-    "itemName": "Item8",
-    "quantity": 81.0,
-    "date": 1707911935195
-  },
-  {
-    "id": "4",
-    "itemID": "11",
-    "itemName": "Item11",
-    "quantity": 30.0,
-    "date": 1692431855376
-  },
-  {
-    "id": "5",
-    "itemID": "6",
-    "itemName": "Item6",
-    "quantity": 37.0,
-    "date": 1718154515190
-  },
-  {
-    "id": "6",
-    "itemID": "1",
-    "itemName": "Item1",
-    "quantity": 2.0,
-    "date": 1690057288922
-  },
-  {
-    "id": "7",
-    "itemID": "15",
-    "itemName": "Item15",
-    "quantity": 56.0,
-    "date": 1710740632909
-  },
-  {
-    "id": "8",
-    "itemID": "20",
-    "itemName": "Item20",
-    "quantity": 17.0,
-    "date": 1689629030012
-  },
-  {
-    "id": "9",
-    "itemID": "7",
-    "itemName": "Item7",
-    "quantity": 43.0,
-    "date": 1698893340111
-  },
-  {
-    "id": "10",
-    "itemID": "3",
-    "itemName": "Item3",
-    "quantity": 63.0,
-    "date": 1712705172917
-  }
+    {
+        "date": "2023-12-19",
+        "itemID": 5,
+        "itemName": "Item5",
+        "quantity": 15,
+        "id": "1"
+    },
+    {
+        "date": "2023-07-24",
+        "itemID": 12,
+        "itemName": "Item12",
+        "quantity": 80,
+        "id": "2"
+    },
+    {
+        "date": "2023-08-12",
+        "itemID": 3,
+        "itemName": "Item3",
+        "quantity": 17,
+        "id": "3"
+    },
+    {
+        "date": "2023-11-21",
+        "itemID": 7,
+        "itemName": "Item7",
+        "quantity": 18,
+        "id": "4"
+    },
+    {
+        "date": "2023-11-15",
+        "itemID": 10,
+        "itemName": "Item10",
+        "quantity": 67,
+        "id": "5"
+    },
+    {
+        "date": "2024-01-31",
+        "itemID": 18,
+        "itemName": "Item18",
+        "quantity": 15,
+        "id": "6"
+    },
+    {
+        "date": "2023-11-27",
+        "itemID": 4,
+        "itemName": "Item4",
+        "quantity": 18,
+        "id": "7"
+    },
+    {
+        "date": "2023-09-17",
+        "itemID": 2,
+        "itemName": "Item2",
+        "quantity": 36,
+        "id": "8"
+    },
+    {
+        "date": "2024-02-07",
+        "itemID": 17,
+        "itemName": "Item17",
+        "quantity": 1,
+        "id": "9"
+    },
+    {
+        "date": "2023-09-21",
+        "itemID": 8,
+        "itemName": "Item8",
+        "quantity": 13,
+        "id": "10"
+    }
 ]

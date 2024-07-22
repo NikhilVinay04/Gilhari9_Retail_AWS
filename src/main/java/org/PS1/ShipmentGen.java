@@ -1,78 +1,70 @@
 package org.PS1;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
 // Generates data of Shipment type and puts it in the shipment_data.json file.
-public class ShipmentGen
-{
+public class ShipmentGen {
     public static void main(String[] args) throws IOException {
         String inventoryFile = "src/main/java/org/PS1/inventory_data.json";
         String shipFile = "src/main/java/org/PS1/shipment_data.json";
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the starting id");
         int startId = sc.nextInt();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
         try {
             // Read inventory data from file
-            String inventoryJson = new String(Files.readAllBytes(Paths.get(inventoryFile)));
-            Type inventoryListType = new TypeToken<ArrayList<Inventory>>(){}.getType();
-            List<Inventory> inventory = new Gson().fromJson(inventoryJson, inventoryListType);
+            String inventoryJson = new String(Files.readAllBytes(Paths.get(inventoryFile)), StandardCharsets.UTF_8);
+            JSONArray inventoryArray = new JSONArray(inventoryJson);
 
-            // Generate sales data
-            Type shipListType = new TypeToken<ArrayList<Shipment>>(){}.getType();
-            List<Shipment> shipData = new ArrayList<>();
-            Random random = new Random();
-            try {
-                if (Files.exists(Paths.get(shipFile))) {
-                    FileReader reader = new FileReader(shipFile);
-                    shipData = gson.fromJson(reader, shipListType);
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            // Generate shipment data
+            JSONArray shipArray = new JSONArray();
+            if (Files.exists(Paths.get(shipFile))) {
+                String shipJson = new String(Files.readAllBytes(Paths.get(shipFile)), StandardCharsets.UTF_8);
+                shipArray = new JSONArray(shipJson);
             }
-            // Select 10 random items from inventory
-            Collections.shuffle(inventory);
-            List<Inventory> selectedItems = inventory.subList(0, 10);
 
-            for (int i = startId; i < startId+selectedItems.size(); i++) {
-                Inventory item = selectedItems.get(i-startId);
-                double salesQuantity = (random.nextInt(1,100));
+            // Select 10 random items from inventory
+            List<JSONObject> inventoryList = new ArrayList<>();
+            for (int i = 0; i < inventoryArray.length(); i++) {
+                inventoryList.add(inventoryArray.getJSONObject(i));
+            }
+            Collections.shuffle(inventoryList);
+            List<JSONObject> selectedItems = inventoryList.subList(0, 10);
+
+            Random random = new Random();
+            for (int i = startId; i < startId + selectedItems.size(); i++) {
+                JSONObject item = selectedItems.get(i - startId);
+                double shipQuantity = random.nextInt(1, 100);
                 long now = System.currentTimeMillis();
                 long oneYearAgo = now - (365L * 24 * 60 * 60 * 1000);
                 long salesDate = ThreadLocalRandom.current().nextLong(oneYearAgo, now);
+                String dateString = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(salesDate));
 
-                Shipment shipEntry = new Shipment(
-                        String.valueOf(i),
-                        String.valueOf(item.getItemID()),
-                        item.getItemName(),
-                        salesQuantity,
-                        salesDate
-                );
-                shipData.add(shipEntry);
+                JSONObject shipEntry = new JSONObject();
+                shipEntry.put("id", String.valueOf(i));
+                shipEntry.put("itemID", Integer.toString(item.getInt("itemID")));
+                shipEntry.put("itemName", item.getString("itemName"));
+                shipEntry.put("quantity", shipQuantity);
+                shipEntry.put("date", dateString);
+
+                shipArray.put(shipEntry);
             }
 
-            // Write sales data to file
-
-            try (FileWriter writer = new FileWriter(shipFile))
-            {
-                gson.toJson(shipData, writer);
-            }
-            catch (IOException e) {
+            // Write shipment data to file
+            try (FileWriter writer = new FileWriter(shipFile)) {
+                writer.write(shipArray.toString(4)); // Indented with 4 spaces for pretty printing
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
